@@ -1,4 +1,4 @@
-import 'package:astronom/api/astro_api/lib/src/model/exoplanet.dart';
+import 'package:astro_api/astro_api.dart';
 import 'package:equatable/equatable.dart';
 
 enum ExoplanetsStatus { initial, success, error, loading }
