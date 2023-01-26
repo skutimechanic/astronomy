@@ -1,0 +1,116 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'ecliptic_coordinates.dart';
+
+// **************************************************************************
+// BuiltValueGenerator
+// **************************************************************************
+
+class _$EclipticCoordinates extends EclipticCoordinates {
+  @override
+  final double? longitude;
+  @override
+  final double? latitude;
+  @override
+  final double? epoch;
+
+  factory _$EclipticCoordinates(
+          [void Function(EclipticCoordinatesBuilder)? updates]) =>
+      (new EclipticCoordinatesBuilder()..update(updates))._build();
+
+  _$EclipticCoordinates._({this.longitude, this.latitude, this.epoch})
+      : super._();
+
+  @override
+  EclipticCoordinates rebuild(
+          void Function(EclipticCoordinatesBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  EclipticCoordinatesBuilder toBuilder() =>
+      new EclipticCoordinatesBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is EclipticCoordinates &&
+        longitude == other.longitude &&
+        latitude == other.latitude &&
+        epoch == other.epoch;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, longitude.hashCode);
+    _$hash = $jc(_$hash, latitude.hashCode);
+    _$hash = $jc(_$hash, epoch.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'EclipticCoordinates')
+          ..add('longitude', longitude)
+          ..add('latitude', latitude)
+          ..add('epoch', epoch))
+        .toString();
+  }
+}
+
+class EclipticCoordinatesBuilder
+    implements Builder<EclipticCoordinates, EclipticCoordinatesBuilder> {
+  _$EclipticCoordinates? _$v;
+
+  double? _longitude;
+  double? get longitude => _$this._longitude;
+  set longitude(double? longitude) => _$this._longitude = longitude;
+
+  double? _latitude;
+  double? get latitude => _$this._latitude;
+  set latitude(double? latitude) => _$this._latitude = latitude;
+
+  double? _epoch;
+  double? get epoch => _$this._epoch;
+  set epoch(double? epoch) => _$this._epoch = epoch;
+
+  EclipticCoordinatesBuilder() {
+    EclipticCoordinates._defaults(this);
+  }
+
+  EclipticCoordinatesBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _longitude = $v.longitude;
+      _latitude = $v.latitude;
+      _epoch = $v.epoch;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(EclipticCoordinates other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$EclipticCoordinates;
+  }
+
+  @override
+  void update(void Function(EclipticCoordinatesBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  EclipticCoordinates build() => _build();
+
+  _$EclipticCoordinates _build() {
+    final _$result = _$v ??
+        new _$EclipticCoordinates._(
+            longitude: longitude, latitude: latitude, epoch: epoch);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

@@ -1,0 +1,21 @@
+# astro_api.model.OrganisationCCD
+
+## Load the model package
+```dart
+import 'package:astro_api/api.dart';
+```
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**id** | **int** |  | 
+**name** | **String** |  | [optional] 
+**physicalPixelNumberX** | **int** |  | [optional] 
+**physicalPixelNumberY** | **int** |  | [optional] 
+**physicalPixelSizeX** | **int** |  | [optional] 
+**physicalPixelSizeY** | **int** |  | [optional] 
+**instrument** | **String** |  | [optional] 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
