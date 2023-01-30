@@ -1,4 +1,5 @@
 import 'package:astro_api/astro_api.dart';
+import 'package:astronom/repository/models/result.dart';
 
 class ExoplanetsRepository {
   static const int pageSize = 20;
@@ -6,18 +7,22 @@ class ExoplanetsRepository {
 
   ExoplanetsRepository({required this.api});
 
-  int _pageNumber = 0;
   final Set<Exoplanet> _cachedExoplanets = {};
 
-  Future<Set<Exoplanet>> getExoplanets() async {
+  Future<Result<Set<Exoplanet>>> getExoplanets() async {
     _pageNumber = _pageNumber == 0 ? 1 : _pageNumber;
+    bool isLastPage = false;
     final response =
         await api.exoplanetsList(page: _pageNumber, pageSize: pageSize);
     final results = response.data?.results;
     if (results != null) {
       _cachedExoplanets.addAll(results);
-      _pageNumber += 1;
+      if (response.data?.next != null) {
+        _pageNumber += 1;
+      } else {
+        isLastPage = true;
+      }
     }
-    return _cachedExoplanets;
+    return Result(isLastPage, _cachedExoplanets);
   }
 }

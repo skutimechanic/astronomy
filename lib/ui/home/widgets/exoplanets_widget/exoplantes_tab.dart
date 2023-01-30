@@ -47,24 +47,39 @@ class _ExoplanetsTabState extends State<ExoplanetsTab> {
             ),
           );
         } else if (state.status.isSuccess || state.exoplanets.isNotEmpty) {
+          final exoplanetsListLength = state.exoplanets.length;
+          final itemCount = !state.isLastPage
+              ? exoplanetsListLength
+              : exoplanetsListLength + 1;
           return Column(
             children: [
               Expanded(
                 child: ListView.builder(
-                  itemCount: state.exoplanets.length,
+                  itemCount: itemCount,
                   controller: _controller,
-                  itemBuilder: ((context, index) => Card(
+                  itemBuilder: ((context, index) {
+                    if (exoplanetsListLength == index && state.isLastPage) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Center(
+                          child: Text('No more items'),
+                        ),
+                      );
+                    } else {
+                      return Card(
                         margin: const EdgeInsets.symmetric(
                             vertical: 8, horizontal: 10),
                         child: ListTile(
                           title: Text(state.exoplanets.elementAt(index).name),
                         ),
-                      )),
+                      );
+                    }
+                  }),
                 ),
               ),
               if (state.status.isLoading)
                 const Padding(
-                  padding: EdgeInsets.only(top: 10, bottom: 40),
+                  padding: EdgeInsets.symmetric(vertical: 10),
                   child: Center(
                     child: CircularProgressIndicator(),
                   ),

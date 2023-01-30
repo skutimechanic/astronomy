@@ -13,10 +13,13 @@ class ExoplanetsBloc extends Bloc<ExoplanetsEvent, ExoplanetsState> {
       if (!state.status.isLoading) {
         try {
           emit(state.copyWith(status: ExoplanetsStatus.loading));
-          final exoplanets = await repository.getExoplanets();
+          final result = await repository.getExoplanets();
           emit(
             state.copyWith(
-                status: ExoplanetsStatus.success, exoplanets: exoplanets),
+              status: ExoplanetsStatus.success,
+              exoplanets: result.data,
+              isLastPage: result.isLastPage,
+            ),
           );
         } catch (error) {
           emit(state.copyWith(status: ExoplanetsStatus.error));
