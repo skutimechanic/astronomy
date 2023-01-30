@@ -7,7 +7,7 @@ class ExoplanetsRepository {
 
   ExoplanetsRepository({required this.api});
 
-  int _pageNumber = 286;
+  int _pageNumber = 0;
   final Set<Exoplanet> _cachedExoplanets = {};
 
   Future<Result<Set<Exoplanet>>> getExoplanets() async {
