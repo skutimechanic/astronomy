@@ -10,7 +10,7 @@ class ExoplanetsBloc extends Bloc<ExoplanetsEvent, ExoplanetsState> {
     required this.repository,
   }) : super(ExoplanetsState()) {
     on<GetExoplanets>((event, emit) async {
-      if (!state.status.isLoading) {
+      if (!state.status.isLoading && !state.isLastPage) {
         try {
           emit(state.copyWith(status: ExoplanetsStatus.loading));
           final result = await repository.getExoplanets();
