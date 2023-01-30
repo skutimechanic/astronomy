@@ -77,18 +77,24 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
                                   : Icons.favorite_border),
                             ),
                             Expanded(
-                              child: ListTile(
-                                title: Text(activity.targetName.orEmpty()),
-                                subtitle: Column(
+                              child: InkWell(
+                                onTap: () {},
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     EllipsisOneLineText(
-                                      activity.creationDate
-                                          .toFormmatedDateTimeString(),
+                                      "Name: ${activity.targetName ?? 'Unknown'}",
+                                      textStyle: const TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    const SizedBox(
+                                      height: 4.0,
                                     ),
                                     EllipsisOneLineText(
-                                      activity.date
-                                          ?.toFormmatedDateTimeString()
-                                          .orEmpty(),
+                                      "Creation date: ${activity.creationDate.toFormmatedDateTimeString()}",
+                                    ),
+                                    EllipsisOneLineText(
+                                      "Date: ${activity.date?.toFormmatedDateTimeString() ?? 'Unknown'}",
                                     ),
                                   ],
                                 ),
