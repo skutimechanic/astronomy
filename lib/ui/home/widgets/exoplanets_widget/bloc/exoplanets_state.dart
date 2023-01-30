@@ -15,7 +15,6 @@ class ExoplanetsState extends Equatable {
   final Set<Exoplanet> exoplanets;
   final ExoplanetsStatus status;
 
-// maybe make const costructor
   ExoplanetsState({
     this.isLastPage = false,
     Set<Exoplanet>? exoplanets,

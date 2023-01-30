@@ -1,6 +1,8 @@
 import 'package:astronom/ui/home/widgets/exoplanets_widget/bloc/exoplanets_event.dart';
 import 'package:astronom/ui/home/widgets/exoplanets_widget/bloc/exoplanets_state.dart';
 import 'package:astronom/ui/widgets/error_with_button.dart';
+import 'package:astronom/ui/widgets/no_more_items.dart';
+import 'package:astronom/utils/scroll_load_more_listener.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/exoplanets_bloc.dart';
@@ -18,13 +20,10 @@ class _ExoplanetsTabState extends State<ExoplanetsTab> {
   @override
   void initState() {
     _controller = ScrollController()
-      ..addListener(() {
-        var position = _controller.position;
-        var nextPagerTrigger = 0.9 * position.maxScrollExtent;
-        if (position.pixels > nextPagerTrigger) {
-          context.read<ExoplanetsBloc>().add(GetExoplanets());
-        }
-      });
+      ..addListener(() => scrollLoadMoreListener(
+            _controller.position,
+            () => context.read<ExoplanetsBloc>().add(GetExoplanets()),
+          ));
     super.initState();
   }
 
@@ -59,12 +58,7 @@ class _ExoplanetsTabState extends State<ExoplanetsTab> {
                   controller: _controller,
                   itemBuilder: ((context, index) {
                     if (exoplanetsListLength == index && state.isLastPage) {
-                      return const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        child: Center(
-                          child: Text('No more items'),
-                        ),
-                      );
+                      return const NoMoreItems();
                     } else {
                       return Card(
                         margin: const EdgeInsets.symmetric(
