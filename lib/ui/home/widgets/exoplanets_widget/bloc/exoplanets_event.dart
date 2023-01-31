@@ -5,7 +5,4 @@ class ExoplanetsEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class GetExoplanets extends ExoplanetsEvent {
-  @override
-  List<Object?> get props => [];
-}
+class GetExoplanets extends ExoplanetsEvent {}
