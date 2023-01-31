@@ -22,7 +22,7 @@ class ActivitiesState extends Equatable {
   }) : activities = activities ?? {};
 
   @override
-  List<Object?> get props => [status, activities];
+  List<Object?> get props => [isLastPage, status, activities];
 
   ActivitiesState copyWith({
     bool? isLastPage,

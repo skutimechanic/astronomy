@@ -22,7 +22,7 @@ class ExoplanetsState extends Equatable {
   }) : exoplanets = exoplanets ?? {};
 
   @override
-  List<Object?> get props => [status, exoplanets];
+  List<Object?> get props => [isLastPage, status, exoplanets];
 
   ExoplanetsState copyWith({
     bool? isLastPage,
