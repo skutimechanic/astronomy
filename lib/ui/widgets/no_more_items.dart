@@ -6,7 +6,7 @@ class NoMoreItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.only(top: 8, bottom: 16),
       child: Center(
         child: Text('No more items'),
       ),

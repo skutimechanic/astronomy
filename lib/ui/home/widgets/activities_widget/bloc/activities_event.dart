@@ -1,3 +1,4 @@
+import 'package:astro_api/astro_api.dart';
 import 'package:equatable/equatable.dart';
 
 class ActivitiesEvent extends Equatable {
@@ -7,12 +8,12 @@ class ActivitiesEvent extends Equatable {
 
 class GetActivities extends ActivitiesEvent {}
 
-class SelectActivity extends ActivitiesEvent {
-  SelectActivity({
-    required this.idSelected,
+class OnActivityIconClick extends ActivitiesEvent {
+  OnActivityIconClick({
+    required this.activity,
   });
-  final int idSelected;
+  final Activity activity;
 
   @override
-  List<Object?> get props => [idSelected];
+  List<Object?> get props => [activity];
 }

@@ -52,4 +52,11 @@ class AstroRepository {
     }
     return Result(isLastPage, _cachedActivitesMap);
   }
+
+  Map<Activity, bool> addToFavorites({
+    required Activity activity,
+  }) {
+    _cachedActivitesMap.update(activity, (value) => !value);
+    return _cachedActivitesMap;
+  }
 }

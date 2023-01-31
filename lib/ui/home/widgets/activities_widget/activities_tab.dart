@@ -1,9 +1,7 @@
-import 'package:astronom/ui/widgets/ellipsis_one_line_text.dart';
+import 'package:astronom/ui/home/widgets/activities_widget/activities_item.dart';
 import 'package:astronom/ui/widgets/error_with_button.dart';
 import 'package:astronom/ui/widgets/no_more_items.dart';
-import 'package:astronom/utils/date_time_extension.dart';
 import 'package:astronom/utils/scroll_load_more_listener.dart';
-import 'package:astronom/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -60,48 +58,17 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
                   itemCount: itemCount,
                   controller: _controller,
                   itemBuilder: ((context, index) {
-                    final activity = state.activities.keys.elementAt(index);
-                    final isFavorite = state.activities.values.elementAt(index);
                     if (resultListLength == index && state.isLastPage) {
                       return const NoMoreItems();
                     } else {
-                      return Card(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 10),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Icon(isFavorite
-                                  ? Icons.favorite
-                                  : Icons.favorite_border),
-                            ),
-                            Expanded(
-                              child: InkWell(
-                                onTap: () {},
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    EllipsisOneLineText(
-                                      "Name: ${activity.targetName ?? 'Unknown'}",
-                                      textStyle: const TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const SizedBox(
-                                      height: 4.0,
-                                    ),
-                                    EllipsisOneLineText(
-                                      "Creation date: ${activity.creationDate.toFormmatedDateTimeString()}",
-                                    ),
-                                    EllipsisOneLineText(
-                                      "Date: ${activity.date?.toFormmatedDateTimeString() ?? 'Unknown'}",
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                      final activities = state.activities;
+                      final activity = activities.keys.elementAt(index);
+                      return ActivityItem(
+                        activity: activity,
+                        onItemClicked: (activity) => {},
+                        onItemIconClicked: (activity) => context
+                            .read<ActivitiesBloc>()
+                            .add(OnActivityIconClick(activity: activity)),
                       );
                     }
                   }),
@@ -109,7 +76,7 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
               ),
               if (state.status.isLoading)
                 const Padding(
-                  padding: EdgeInsets.only(top: 10, bottom: 40),
+                  padding: EdgeInsets.symmetric(vertical: 10),
                   child: Center(
                     child: CircularProgressIndicator(),
                   ),
