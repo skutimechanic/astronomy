@@ -6,7 +6,7 @@ void scrollLoadMoreListener(
   ScrollPosition scrollPosition,
   LoadMoreCallback loadMoreCallback,
 ) {
-  if(scrollPosition.atEdge %% scrollPosition.pixels > 0) {
+  if (scrollPosition.atEdge && scrollPosition.pixels > 0) {
     loadMoreCallback();
   }
 }
