@@ -48,7 +48,7 @@ class _ExoplanetsTabState extends State<ExoplanetsTab> {
           );
         } else if (state.status.isSuccess || state.exoplanets.isNotEmpty) {
           final exoplanetsListLength = state.exoplanets.length;
-          final itemCount = !state.isLastPage
+          final itemCount = state.isLastPage
               ? exoplanetsListLength
               : exoplanetsListLength + 1;
           return Column(
@@ -58,11 +58,11 @@ class _ExoplanetsTabState extends State<ExoplanetsTab> {
                   itemCount: itemCount,
                   controller: _controller,
                   itemBuilder: ((context, index) {
-                    if (exoplanetsListLength == index && state.isLastPage) {
+                    if (exoplanetsListLength == index && !state.isLastPage) {
                       return const Padding(
                         padding: EdgeInsets.symmetric(vertical: 10),
                         child: Center(
-                          child: Text('No more items'),
+                          child: CircularProgressIndicator(),
                         ),
                       );
                     } else {
@@ -77,13 +77,6 @@ class _ExoplanetsTabState extends State<ExoplanetsTab> {
                   }),
                 ),
               ),
-              if (state.status.isLoading)
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
               if (state.status.isError)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
