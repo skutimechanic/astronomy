@@ -35,5 +35,14 @@ class ActivitiesBloc extends Bloc<ActivitiesEvent, ActivitiesState> {
         activities: result,
       ));
     });
+    on<RefreshActivites>((event, emit) {
+      final status = !state.status.isLoading ? state.status : null;
+      emit(state.copyWith(status: ActivitiesStatus.loading));
+      final result = repository.refreshActivitesMap();
+      emit(state.copyWith(
+        status: status ?? ActivitiesStatus.success,
+        activities: result,
+      ));
+    });
   }
 }

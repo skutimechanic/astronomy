@@ -69,4 +69,8 @@ class AstroRepository {
     _cachedActivitesMap.update(activity, (value) => !value);
     return Tuple2(activity, _cachedActivitesMap[activity] ?? false);
   }
+
+  Map<Activity, bool> refreshActivitesMap() {
+    return _cachedActivitesMap;
+  }
 }

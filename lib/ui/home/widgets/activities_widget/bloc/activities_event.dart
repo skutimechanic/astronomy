@@ -8,6 +8,8 @@ class ActivitiesEvent extends Equatable {
 
 class GetActivities extends ActivitiesEvent {}
 
+class RefreshActivites extends ActivitiesEvent {}
+
 class OnActivityIconClick extends ActivitiesEvent {
   OnActivityIconClick({
     required this.activity,

@@ -66,9 +66,14 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
                       final activity = activities.keys.elementAt(index);
                       return ActivityItem(
                         activity: activity,
-                        onItemClicked: (activity, isFavorite) =>
-                            Navigator.of(context).push(ActivityDetails.route(
-                                activity: activity, isFavorite: isFavorite)),
+                        onItemClicked: (activity, isFavorite) async {
+                          await Navigator.of(context).push(
+                              ActivityDetails.route(
+                                  activity: activity, isFavorite: isFavorite));
+                          context
+                              .read<ActivitiesBloc>()
+                              .add(RefreshActivites());
+                        },
                         onItemIconClicked: (activity) => context
                             .read<ActivitiesBloc>()
                             .add(OnActivityIconClick(activity: activity)),

@@ -6,7 +6,6 @@ import 'package:astronom/ui/home/widgets/activities_widget/details_widget/bloc/a
 import 'package:astronom/ui/home/widgets/activities_widget/details_widget/bloc/activity_details_state.dart';
 import 'package:astronom/ui/widgets/favorite_icon_button.dart';
 import 'package:astronom/utils/date_time_extension.dart';
-import 'package:astronom/utils/int_extensions.dart';
 import 'package:astronom/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
