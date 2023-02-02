@@ -9,20 +9,47 @@ import 'package:astronom/ui/widgets/tab_label.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(providers: [
+      BlocProvider<ExoplanetsBloc>(
+        create: (context) => ExoplanetsBloc(
+          repository: context.read<AstroRepository>(),
+        )..add(GetExoplanets()),
+      ),
+      BlocProvider(
+        create: (context) => ActivitiesBloc(
+          repository: context.read<AstroRepository>(),
+        )..add(GetActivities()),
+      ),
+    ], child: const HomePageView());
+  }
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageView extends StatefulWidget {
+  const HomePageView({super.key});
+
+  @override
+  State<HomePageView> createState() => _HomePageViewState();
+}
+
+class _HomePageViewState extends State<HomePageView> {
   late final TextEditingController _controller;
   bool isSearchBarOpen = false;
+
+  void _setupTextControllerListener() {
+    _controller.addListener(() {
+      // waiting for place to listen
+    });
+  }
 
   @override
   void initState() {
     _controller = TextEditingController();
+    _setupTextControllerListener();
     super.initState();
   }
 
@@ -48,24 +75,10 @@ class _HomePageState extends State<HomePage> {
           actions: _appBarActions(),
         ),
         backgroundColor: Colors.blueGrey,
-        body: MultiBlocProvider(
-          providers: [
-            BlocProvider<ExoplanetsBloc>(
-              create: (context) => ExoplanetsBloc(
-                repository: context.read<AstroRepository>(),
-              )..add(GetExoplanets()),
-            ),
-            BlocProvider(
-              create: (context) => ActivitiesBloc(
-                repository: context.read<AstroRepository>(),
-              )..add(GetActivities()),
-            ),
-          ],
-          child: const TabBarView(children: [
-            ExoplanetsTab(),
-            ActivitiesTab(),
-          ]),
-        ),
+        body: const TabBarView(children: [
+          ExoplanetsTab(),
+          ActivitiesTab(),
+        ]),
       ),
     );
   }
