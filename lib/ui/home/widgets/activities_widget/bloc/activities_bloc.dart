@@ -29,7 +29,7 @@ class ActivitiesBloc extends Bloc<ActivitiesEvent, ActivitiesState> {
     on<OnActivityIconClick>((event, emit) {
       final status = !state.status.isLoading ? state.status : null;
       emit(state.copyWith(status: ActivitiesStatus.loading));
-      final result = repository.addToFavorites(activity: event.activity);
+      final result = repository.updateFavorite(activity: event.activity);
       emit(state.copyWith(
         status: status ?? ActivitiesStatus.success,
         activities: result,

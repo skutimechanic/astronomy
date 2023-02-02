@@ -19,6 +19,7 @@ dependencies:
   astro_api:
     path: ./api/astro_api
   intl: ^0.18.0
+  tuple: ^2.0.1
 
 dev_dependencies:
   flutter_test:

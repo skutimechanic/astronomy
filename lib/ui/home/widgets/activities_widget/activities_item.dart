@@ -1,5 +1,6 @@
 import 'package:astro_api/astro_api.dart';
 import 'package:astronom/ui/widgets/ellipsis_one_line_text.dart';
+import 'package:astronom/ui/widgets/favorite_icon_button.dart';
 import 'package:astronom/utils/date_time_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/activities_bloc.dart';
 import 'bloc/activities_state.dart';
 
-typedef ActivityClicked = Function(Activity activity);
+typedef ActivityIconClicked = Function(Activity activity);
+typedef ActivityClicked = Function(Activity activity, bool isFavorite);
 
 class ActivityItem extends StatelessWidget {
   const ActivityItem({
@@ -19,7 +21,7 @@ class ActivityItem extends StatelessWidget {
 
   final Activity activity;
   final ActivityClicked onItemClicked;
-  final ActivityClicked onItemIconClicked;
+  final ActivityIconClicked onItemIconClicked;
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +37,14 @@ class ActivityItem extends StatelessWidget {
             horizontal: 10,
           ),
           child: InkWell(
-            onTap: () {},
+            onTap: () => onItemClicked(activity, state),
             child: Row(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: IconButton(
-                    icon: Icon(state ? Icons.favorite : Icons.favorite_border),
-                    onPressed: () => onItemIconClicked(activity),
+                  child: FavoriteIconButton(
+                    onIconClick: () => onItemIconClicked(activity),
+                    isFavorite: state,
                   ),
                 ),
                 Expanded(

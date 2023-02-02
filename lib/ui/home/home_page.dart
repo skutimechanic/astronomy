@@ -28,32 +28,23 @@ class HomePage extends StatelessWidget {
           ),
         ),
         backgroundColor: Colors.blueGrey,
-        body: RepositoryProvider(
-          create: (context) {
-            final astroApi = AstroApi();
-            return AstroRepository(
-              exoplanetsApi: astroApi.getExoplanetsApi(),
-              activitiesApi: astroApi.getActivitiesApi(),
-            );
-          },
-          child: MultiBlocProvider(
-            providers: [
-              BlocProvider<ExoplanetsBloc>(
-                create: (context) => ExoplanetsBloc(
-                  repository: context.read<AstroRepository>(),
-                )..add(GetExoplanets()),
-              ),
-              BlocProvider(
-                create: (context) => ActivitiesBloc(
-                  repository: context.read<AstroRepository>(),
-                )..add(GetActivities()),
-              ),
-            ],
-            child: const TabBarView(children: [
-              ExoplanetsTab(),
-              ActivitiesTab(),
-            ]),
-          ),
+        body: MultiBlocProvider(
+          providers: [
+            BlocProvider<ExoplanetsBloc>(
+              create: (context) => ExoplanetsBloc(
+                repository: context.read<AstroRepository>(),
+              )..add(GetExoplanets()),
+            ),
+            BlocProvider(
+              create: (context) => ActivitiesBloc(
+                repository: context.read<AstroRepository>(),
+              )..add(GetActivities()),
+            ),
+          ],
+          child: const TabBarView(children: [
+            ExoplanetsTab(),
+            ActivitiesTab(),
+          ]),
         ),
       ),
     );

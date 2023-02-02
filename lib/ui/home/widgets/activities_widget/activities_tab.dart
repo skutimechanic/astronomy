@@ -1,4 +1,5 @@
 import 'package:astronom/ui/home/widgets/activities_widget/activities_item.dart';
+import 'package:astronom/ui/home/widgets/activities_widget/details_widget/activity_details.dart';
 import 'package:astronom/ui/widgets/error_with_button.dart';
 import 'package:astronom/ui/widgets/no_more_items.dart';
 import 'package:astronom/utils/scroll_load_more_listener.dart';
@@ -65,7 +66,9 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
                       final activity = activities.keys.elementAt(index);
                       return ActivityItem(
                         activity: activity,
-                        onItemClicked: (activity) => {},
+                        onItemClicked: (activity, isFavorite) =>
+                            Navigator.of(context).push(ActivityDetails.route(
+                                activity: activity, isFavorite: isFavorite)),
                         onItemIconClicked: (activity) => context
                             .read<ActivitiesBloc>()
                             .add(OnActivityIconClick(activity: activity)),

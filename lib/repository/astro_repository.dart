@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:astro_api/astro_api.dart';
 import 'package:astronom/repository/models/result.dart';
+import 'package:tuple/tuple.dart';
 
 class AstroRepository {
   static const int pageSize = 20;
@@ -53,10 +56,17 @@ class AstroRepository {
     return Result(isLastPage, _cachedActivitesMap);
   }
 
-  Map<Activity, bool> addToFavorites({
+  Map<Activity, bool> updateFavorite({
     required Activity activity,
   }) {
     _cachedActivitesMap.update(activity, (value) => !value);
     return _cachedActivitesMap;
+  }
+
+  Tuple2<Activity, bool> updateFavoriteOnDetails({
+    required Activity activity,
+  }) {
+    _cachedActivitesMap.update(activity, (value) => !value);
+    return Tuple2(activity, _cachedActivitesMap[activity] ?? false);
   }
 }
