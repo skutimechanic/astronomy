@@ -1,12 +1,11 @@
 import 'package:astro_api/astro_api.dart';
+import 'package:astronom/ui/home/cubit/home_cubit.dart';
+import 'package:astronom/ui/home/cubit/home_state.dart';
 import 'package:astronom/ui/widgets/ellipsis_one_line_text.dart';
 import 'package:astronom/ui/widgets/favorite_icon_button.dart';
 import 'package:astronom/utils/date_time_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'bloc/activities_bloc.dart';
-import 'bloc/activities_state.dart';
 
 typedef ActivityIconClicked = Function(Activity activity);
 typedef ActivityClicked = Function(Activity activity, bool isFavorite);
@@ -28,8 +27,14 @@ class ActivityItem extends StatelessWidget {
     final targetName = activity.targetName;
     final String nameLabel =
         (targetName != null && targetName.isNotEmpty) ? targetName : 'Unknown';
-    return BlocSelector<ActivitiesBloc, ActivitiesState, bool>(
-      selector: (state) => state.activities[activity] ?? false,
+    return BlocSelector<HomeCubit, HomeState, bool>(
+      selector: (state) {
+        if (state is ActivitiesState) {
+          return state.activities[activity] ?? false;
+        } else {
+          return false;
+        }
+      },
       builder: (context, state) {
         return Card(
           margin: const EdgeInsets.symmetric(

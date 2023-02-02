@@ -1,9 +1,6 @@
 import 'package:astronom/repository/astro_repository.dart';
+import 'package:astronom/ui/home/cubit/home_cubit.dart';
 import 'package:astronom/ui/home/widgets/activities_widget/activities_tab.dart';
-import 'package:astronom/ui/home/widgets/activities_widget/bloc/activities_bloc.dart';
-import 'package:astronom/ui/home/widgets/activities_widget/bloc/activities_event.dart';
-import 'package:astronom/ui/home/widgets/exoplanets_widget/bloc/exoplanets_bloc.dart';
-import 'package:astronom/ui/home/widgets/exoplanets_widget/bloc/exoplanets_event.dart';
 import 'package:astronom/ui/home/widgets/exoplanets_widget/exoplantes_tab.dart';
 import 'package:astronom/ui/widgets/tab_label.dart';
 import 'package:flutter/material.dart';
@@ -48,23 +45,18 @@ class _HomePageState extends State<HomePage> {
           actions: _appBarActions(),
         ),
         backgroundColor: Colors.blueGrey,
-        body: MultiBlocProvider(
-          providers: [
-            BlocProvider<ExoplanetsBloc>(
-              create: (context) => ExoplanetsBloc(
-                repository: context.read<AstroRepository>(),
-              )..add(GetExoplanets()),
-            ),
-            BlocProvider(
-              create: (context) => ActivitiesBloc(
-                repository: context.read<AstroRepository>(),
-              )..add(GetActivities()),
-            ),
-          ],
-          child: const TabBarView(children: [
-            ExoplanetsTab(),
-            ActivitiesTab(),
-          ]),
+        body: BlocProvider(
+          create: (context) => HomeCubit(
+            repository: context.read<AstroRepository>(),
+          )
+            ..getExoplanets()
+            ..getActivities(),
+          child: const TabBarView(
+            children: [
+              ExoplanetsTab(),
+              ActivitiesTab(),
+            ],
+          ),
         ),
       ),
     );
