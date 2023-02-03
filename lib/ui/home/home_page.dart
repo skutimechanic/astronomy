@@ -42,7 +42,9 @@ class _HomePageViewState extends State<HomePageView> {
 
   void _setupTextControllerListener() {
     _controller.addListener(() {
-      // waiting for place to listen
+      context
+          .read<ExoplanetsBloc>()
+          .add(SearchExoplanets(searchPhrase: _controller.text));
     });
   }
 
@@ -65,7 +67,7 @@ class _HomePageViewState extends State<HomePageView> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: _titleBar(),
+          title: _titleBarWithSearch(),
           bottom: const TabBar(
             tabs: [
               TabLabel(text: 'exoplanets'),
@@ -97,12 +99,13 @@ class _HomePageViewState extends State<HomePageView> {
     }
   }
 
-  Widget _titleBar() {
+  Widget _titleBarWithSearch() {
     if (isSearchBarOpen) {
       return Row(
         children: [
           IconButton(
             onPressed: () => setState(() {
+              _controller.clear();
               isSearchBarOpen = !isSearchBarOpen;
             }),
             icon: const Icon(

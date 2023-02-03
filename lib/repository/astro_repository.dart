@@ -36,6 +36,14 @@ class AstroRepository {
     return Result(isLastPage, _cachedExoplanets);
   }
 
+  Future<Set<Exoplanet>> searchExoplanetsByPrashe({
+    required String phrase,
+  }) async {
+    return _cachedExoplanets
+        .where((element) => element.name.toLowerCase().contains(phrase))
+        .toSet();
+  }
+
   Future<Result<Map<Activity, bool>>> getActivities() async {
     _activitiesPageNumber =
         _activitiesPageNumber == 0 ? 1 : _activitiesPageNumber;

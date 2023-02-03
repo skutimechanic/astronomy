@@ -6,3 +6,9 @@ class ExoplanetsEvent extends Equatable {
 }
 
 class GetExoplanets extends ExoplanetsEvent {}
+
+class SearchExoplanets extends ExoplanetsEvent {
+  SearchExoplanets({required this.searchPhrase});
+
+  final String searchPhrase;
+}
