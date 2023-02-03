@@ -1,4 +1,5 @@
 import 'package:astronom/ui/widgets/error_with_button.dart';
+import 'package:astronom/ui/widgets/no_results.dart';
 import 'package:astronom/utils/scroll_load_more_listener.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,11 +45,13 @@ class _ExoplanetsViewState extends State<ExoplanetsView> {
                   context.read<ExoplanetsBloc>().add(GetExoplanets()),
             ),
           );
+        } else if (state.status.isSuccess && state.exoplanets.isEmpty) {
+          return const NoResults();
         } else if (state.status.isSuccess || state.exoplanets.isNotEmpty) {
           final exoplanetsListLength = state.exoplanets.length;
-          final itemCount = state.isLastPage
-              ? exoplanetsListLength
-              : exoplanetsListLength + 1;
+          final itemCount = state.status.isLoading && !state.isLastPage
+              ? exoplanetsListLength + 1
+              : exoplanetsListLength;
           return Column(
             children: [
               Expanded(
@@ -56,7 +59,9 @@ class _ExoplanetsViewState extends State<ExoplanetsView> {
                   itemCount: itemCount,
                   controller: _controller,
                   itemBuilder: ((context, index) {
-                    if (exoplanetsListLength == index && !state.isLastPage) {
+                    if (exoplanetsListLength == index &&
+                        !state.isLastPage &&
+                        state.status.isLoading) {
                       return const Padding(
                         padding: EdgeInsets.symmetric(vertical: 10),
                         child: Center(

@@ -4,6 +4,7 @@ import 'package:astronom/utils/scroll_load_more_listener.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../widgets/no_results.dart';
 import 'activities_item.dart';
 import 'bloc/activities_bloc.dart';
 import 'bloc/activities_event.dart';
@@ -47,10 +48,13 @@ class _ActivitiesViewState extends State<ActivitiesView> {
                   context.read<ActivitiesBloc>().add(GetActivities()),
             ),
           );
+        } else if (state.status.isSuccess && state.activities.isEmpty) {
+          return const NoResults();
         } else if (state.status.isSuccess || state.activities.isNotEmpty) {
           final resultListLength = state.activities.length;
-          final itemCount =
-              state.isLastPage ? resultListLength : resultListLength + 1;
+          final itemCount = state.status.isLoading && !state.isLastPage
+              ? resultListLength + 1
+              : resultListLength;
           return Column(
             children: [
               Expanded(
@@ -58,7 +62,9 @@ class _ActivitiesViewState extends State<ActivitiesView> {
                   itemCount: itemCount,
                   controller: _controller,
                   itemBuilder: ((context, index) {
-                    if (resultListLength == index && !state.isLastPage) {
+                    if (resultListLength == index &&
+                        !state.isLastPage &&
+                        state.status.isLoading) {
                       return const Padding(
                         padding: EdgeInsets.symmetric(vertical: 10),
                         child: Center(
