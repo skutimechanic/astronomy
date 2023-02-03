@@ -1,7 +1,6 @@
 import 'package:astronom/ui/home/widgets/activities_widget/activities_item.dart';
 import 'package:astronom/ui/home/widgets/activities_widget/details_widget/activity_details.dart';
 import 'package:astronom/ui/widgets/error_with_button.dart';
-import 'package:astronom/ui/widgets/no_more_items.dart';
 import 'package:astronom/utils/scroll_load_more_listener.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,7 +50,7 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
         } else if (state.status.isSuccess || state.activities.isNotEmpty) {
           final resultListLength = state.activities.length;
           final itemCount =
-              !state.isLastPage ? resultListLength : resultListLength + 1;
+              state.isLastPage ? resultListLength : resultListLength + 1;
           return Column(
             children: [
               Expanded(
@@ -59,8 +58,13 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
                   itemCount: itemCount,
                   controller: _controller,
                   itemBuilder: ((context, index) {
-                    if (resultListLength == index && state.isLastPage) {
-                      return const NoMoreItems();
+                    if (resultListLength == index && !state.isLastPage) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
                     } else {
                       final activities = state.activities;
                       final activity = activities.keys.elementAt(index);
@@ -82,13 +86,6 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
                   }),
                 ),
               ),
-              if (state.status.isLoading)
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
               if (state.status.isError)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),

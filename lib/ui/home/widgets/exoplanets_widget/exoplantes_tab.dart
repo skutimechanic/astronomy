@@ -1,7 +1,6 @@
 import 'package:astronom/ui/home/widgets/exoplanets_widget/bloc/exoplanets_event.dart';
 import 'package:astronom/ui/home/widgets/exoplanets_widget/bloc/exoplanets_state.dart';
 import 'package:astronom/ui/widgets/error_with_button.dart';
-import 'package:astronom/ui/widgets/no_more_items.dart';
 import 'package:astronom/utils/scroll_load_more_listener.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,7 +46,7 @@ class _ExoplanetsTabState extends State<ExoplanetsTab> {
           );
         } else if (state.status.isSuccess || state.exoplanets.isNotEmpty) {
           final exoplanetsListLength = state.exoplanets.length;
-          final itemCount = !state.isLastPage
+          final itemCount = state.isLastPage
               ? exoplanetsListLength
               : exoplanetsListLength + 1;
           return Column(
@@ -57,8 +56,13 @@ class _ExoplanetsTabState extends State<ExoplanetsTab> {
                   itemCount: itemCount,
                   controller: _controller,
                   itemBuilder: ((context, index) {
-                    if (exoplanetsListLength == index && state.isLastPage) {
-                      return const NoMoreItems();
+                    if (exoplanetsListLength == index && !state.isLastPage) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
                     } else {
                       return Card(
                         margin: const EdgeInsets.symmetric(
@@ -71,13 +75,6 @@ class _ExoplanetsTabState extends State<ExoplanetsTab> {
                   }),
                 ),
               ),
-              if (state.status.isLoading)
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
               if (state.status.isError)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
