@@ -90,11 +90,9 @@ class _HomeViewState extends State<HomeView> {
         final offsetAnimation = Tween<Offset>(
                 begin: const Offset(1.0, 0.0), end: const Offset(0.0, 0.0))
             .animate(animation);
-        return ClipRect(
-          child: SlideTransition(
-            position: offsetAnimation,
-            child: child,
-          ),
+        return SlideTransition(
+          position: offsetAnimation,
+          child: child,
         );
       },
       duration: const Duration(milliseconds: 500),
