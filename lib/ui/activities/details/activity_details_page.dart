@@ -1,17 +1,18 @@
 import 'package:astro_api/astro_api.dart';
 import 'package:astronom/repository/astro_repository.dart';
-import 'package:astronom/ui/home/widgets/activities_widget/details_widget/activity_details_row.dart';
-import 'package:astronom/ui/home/widgets/activities_widget/details_widget/bloc/activity_details_bloc.dart';
-import 'package:astronom/ui/home/widgets/activities_widget/details_widget/bloc/activity_details_event.dart';
-import 'package:astronom/ui/home/widgets/activities_widget/details_widget/bloc/activity_details_state.dart';
 import 'package:astronom/ui/widgets/favorite_icon_button.dart';
 import 'package:astronom/utils/date_time_extension.dart';
 import 'package:astronom/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ActivityDetails extends StatelessWidget {
-  const ActivityDetails({super.key});
+import 'activity_details_row.dart';
+import 'bloc/activity_details_bloc.dart';
+import 'bloc/activity_details_event.dart';
+import 'bloc/activity_details_state.dart';
+
+class ActivityDetailsPage extends StatelessWidget {
+  const ActivityDetailsPage({super.key});
 
   static Route<void> route({
     required Activity activity,
@@ -24,7 +25,7 @@ class ActivityDetails extends StatelessWidget {
           activity: activity,
           isFavorite: isFavorite,
         ),
-        child: const ActivityDetails(),
+        child: const ActivityDetailsPage(),
       ),
     );
   }

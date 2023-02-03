@@ -1,19 +1,19 @@
-import 'package:astronom/ui/home/widgets/exoplanets_widget/bloc/exoplanets_event.dart';
-import 'package:astronom/ui/home/widgets/exoplanets_widget/bloc/exoplanets_state.dart';
 import 'package:astronom/ui/widgets/error_with_button.dart';
 import 'package:astronom/utils/scroll_load_more_listener.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/exoplanets_bloc.dart';
+import 'bloc/exoplanets_event.dart';
+import 'bloc/exoplanets_state.dart';
 
-class ExoplanetsTab extends StatefulWidget {
-  const ExoplanetsTab({super.key});
+class ExoplanetsView extends StatefulWidget {
+  const ExoplanetsView({super.key});
 
   @override
-  State<ExoplanetsTab> createState() => _ExoplanetsTabState();
+  State<ExoplanetsView> createState() => _ExoplanetsViewState();
 }
 
-class _ExoplanetsTabState extends State<ExoplanetsTab> {
+class _ExoplanetsViewState extends State<ExoplanetsView> {
   late ScrollController _controller;
 
   @override

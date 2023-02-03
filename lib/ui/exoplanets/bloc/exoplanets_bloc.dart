@@ -1,7 +1,8 @@
 import 'package:astronom/repository/astro_repository.dart';
-import 'package:astronom/ui/home/widgets/exoplanets_widget/bloc/exoplanets_event.dart';
-import 'package:astronom/ui/home/widgets/exoplanets_widget/bloc/exoplanets_state.dart';
 import 'package:bloc/bloc.dart';
+
+import 'exoplanets_event.dart';
+import 'exoplanets_state.dart';
 
 class ExoplanetsBloc extends Bloc<ExoplanetsEvent, ExoplanetsState> {
   final AstroRepository repository;

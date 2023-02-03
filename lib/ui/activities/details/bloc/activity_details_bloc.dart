@@ -1,8 +1,9 @@
 import 'package:astro_api/astro_api.dart';
 import 'package:astronom/repository/astro_repository.dart';
-import 'package:astronom/ui/home/widgets/activities_widget/details_widget/bloc/activity_details_event.dart';
-import 'package:astronom/ui/home/widgets/activities_widget/details_widget/bloc/activity_details_state.dart';
 import 'package:bloc/bloc.dart';
+
+import 'activity_details_event.dart';
+import 'activity_details_state.dart';
 
 class ActivityDetailsBloc extends Bloc<ActivityEvent, ActivityState> {
   final AstroRepository repository;

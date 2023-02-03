@@ -1,22 +1,22 @@
-import 'package:astronom/ui/home/widgets/activities_widget/activities_item.dart';
-import 'package:astronom/ui/home/widgets/activities_widget/details_widget/activity_details.dart';
+import 'package:astronom/ui/activities/details/activity_details_page.dart';
 import 'package:astronom/ui/widgets/error_with_button.dart';
 import 'package:astronom/utils/scroll_load_more_listener.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'activities_item.dart';
 import 'bloc/activities_bloc.dart';
 import 'bloc/activities_event.dart';
 import 'bloc/activities_state.dart';
 
-class ActivitiesTab extends StatefulWidget {
-  const ActivitiesTab({super.key});
+class ActivitiesView extends StatefulWidget {
+  const ActivitiesView({super.key});
 
   @override
-  State<ActivitiesTab> createState() => _ActivitiesTabState();
+  State<ActivitiesView> createState() => _ActivitiesViewState();
 }
 
-class _ActivitiesTabState extends State<ActivitiesTab> {
+class _ActivitiesViewState extends State<ActivitiesView> {
   late ScrollController _controller;
 
   @override
@@ -72,7 +72,7 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
                         activity: activity,
                         onItemClicked: (activity, isFavorite) async {
                           await Navigator.of(context).push(
-                              ActivityDetails.route(
+                              ActivityDetailsPage.route(
                                   activity: activity, isFavorite: isFavorite));
                           context
                               .read<ActivitiesBloc>()
