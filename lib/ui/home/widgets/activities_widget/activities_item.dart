@@ -27,7 +27,7 @@ class ActivityItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final targetName = activity.targetName;
     final String nameLabel =
-        (targetName != null && targetName.isNotEmpty) ? targetName : 'Unknown';
+        (targetName != null && targetName.isNotEmpty) ? targetName : 'Empty';
     return BlocSelector<ActivitiesBloc, ActivitiesState, bool>(
       selector: (state) => state.activities[activity] ?? false,
       builder: (context, state) {

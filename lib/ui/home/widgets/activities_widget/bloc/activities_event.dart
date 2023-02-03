@@ -19,3 +19,9 @@ class OnActivityIconClick extends ActivitiesEvent {
   @override
   List<Object?> get props => [activity];
 }
+
+class SearchActivities extends ActivitiesEvent {
+  SearchActivities({required this.searchPhrase});
+
+  final String searchPhrase;
+}

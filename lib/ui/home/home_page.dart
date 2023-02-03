@@ -45,6 +45,9 @@ class _HomePageViewState extends State<HomePageView> {
       context
           .read<ExoplanetsBloc>()
           .add(SearchExoplanets(searchPhrase: _controller.text));
+      context
+          .read<ActivitiesBloc>()
+          .add(SearchActivities(searchPhrase: _controller.text));
     });
   }
 

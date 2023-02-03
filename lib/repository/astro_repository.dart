@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:astro_api/astro_api.dart';
 import 'package:astronom/repository/models/result.dart';
+import 'package:astronom/utils/string_extensions.dart';
 import 'package:tuple/tuple.dart';
 
 class AstroRepository {
@@ -62,6 +63,17 @@ class AstroRepository {
       }
     }
     return Result(isLastPage, _cachedActivitesMap);
+  }
+
+  Future<Map<Activity, bool>> searchActivitesByPrashe({
+    required String phrase,
+  }) async {
+    final activities = Map<Activity, bool>.from(_cachedActivitesMap);
+
+    activities.removeWhere((key, value) =>
+        !key.targetName.orEmpty().toLowerCase().contains(phrase));
+
+    return activities;
   }
 
   Map<Activity, bool> updateFavorite({

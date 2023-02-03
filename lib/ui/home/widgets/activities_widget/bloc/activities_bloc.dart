@@ -5,12 +5,15 @@ import 'package:bloc/bloc.dart';
 
 class ActivitiesBloc extends Bloc<ActivitiesEvent, ActivitiesState> {
   final AstroRepository repository;
+  String _searchPhrase = "";
 
   ActivitiesBloc({
     required this.repository,
   }) : super(ActivitiesState()) {
     on<GetActivities>((event, emit) async {
-      if (!state.status.isLoading) {
+      if (!state.status.isLoading &&
+          !state.isLastPage &&
+          _searchPhrase.isEmpty) {
         try {
           emit(state.copyWith(status: ActivitiesStatus.loading));
           final result = await repository.getActivities();
@@ -43,6 +46,22 @@ class ActivitiesBloc extends Bloc<ActivitiesEvent, ActivitiesState> {
         status: status ?? ActivitiesStatus.success,
         activities: result,
       ));
+    });
+    on<SearchActivities>((event, emit) async {
+      _searchPhrase = event.searchPhrase.toLowerCase().trim();
+      try {
+        emit(state.copyWith(status: ActivitiesStatus.loading));
+        final result =
+            await repository.searchActivitesByPrashe(phrase: _searchPhrase);
+        emit(
+          state.copyWith(
+            status: ActivitiesStatus.success,
+            activities: result,
+          ),
+        );
+      } catch (error) {
+        emit(state.copyWith(status: ActivitiesStatus.error));
+      }
     });
   }
 }
