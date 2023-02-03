@@ -18,7 +18,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   late final TextEditingController _controller;
-  bool isSearchBarOpen = false;
+  bool _isSearchBarOpen = false;
 
   void _setupTextControllerListener() {
     _controller.addListener(() {
@@ -69,27 +69,45 @@ class _HomeViewState extends State<HomeView> {
   }
 
   List<Widget>? _appBarActions() {
-    if (isSearchBarOpen) {
+    if (_isSearchBarOpen) {
       return null;
     } else {
       return [
         IconButton(
-            onPressed: () => setState(() {
-                  isSearchBarOpen = !isSearchBarOpen;
-                }),
+            onPressed: () => setState(
+                  () {
+                    _isSearchBarOpen = !_isSearchBarOpen;
+                  },
+                ),
             icon: const Icon(Icons.search))
       ];
     }
   }
 
   Widget _titleBarWithSearch() {
-    if (isSearchBarOpen) {
-      return Row(
+    return AnimatedSwitcher(
+      transitionBuilder: (child, animation) {
+        final offsetAnimation = Tween<Offset>(
+                begin: const Offset(1.0, 0.0), end: const Offset(0.0, 0.0))
+            .animate(animation);
+        return ClipRect(
+          child: SlideTransition(
+            position: offsetAnimation,
+            child: child,
+          ),
+        );
+      },
+      duration: const Duration(milliseconds: 500),
+      child: _isSearchBarOpen ? _searchBar() : _titleBar(),
+    );
+  }
+
+  Widget _searchBar() => Row(
         children: [
           IconButton(
             onPressed: () => setState(() {
               _controller.clear();
-              isSearchBarOpen = !isSearchBarOpen;
+              _isSearchBarOpen = !_isSearchBarOpen;
             }),
             icon: const Icon(
               Icons.arrow_back,
@@ -125,8 +143,6 @@ class _HomeViewState extends State<HomeView> {
           const SizedBox(width: 10.0),
         ],
       );
-    } else {
-      return const Text('Astro');
-    }
-  }
+
+  Widget _titleBar() => const Text('Astro');
 }
