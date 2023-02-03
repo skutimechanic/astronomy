@@ -95,7 +95,7 @@ class _HomeViewState extends State<HomeView> {
           child: child,
         );
       },
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 250),
       child: _isSearchBarOpen ? _searchBar() : _titleBar(),
     );
   }
