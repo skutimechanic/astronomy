@@ -18,7 +18,6 @@ class ActivityDetailsRow extends StatelessWidget {
             label,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          const Spacer(),
           Expanded(
             child: Text(
               value,

@@ -55,12 +55,12 @@ class ActivityDetailsPage extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 )
               : Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      SingleChildScrollView(
-                        child: Column(
+                      Expanded(
+                        child: ListView(
                           children: [
                             _showIfValidateDataProvided(
                               "ID",
@@ -109,7 +109,7 @@ class ActivityDetailsPage extends StatelessWidget {
                               activity.instrument,
                             ),
                             if (activity.programme != null) ...[
-                              Row(children: [
+                              Column(children: [
                                 const Text(
                                   "PROGRAMME:",
                                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -153,7 +153,7 @@ class ActivityDetailsPage extends StatelessWidget {
                               activity.targetName,
                             ),
                             if (activity.coordinates != null) ...[
-                              Row(children: [
+                              Column(children: [
                                 const Text(
                                   "COORDINATES:",
                                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -184,9 +184,8 @@ class ActivityDetailsPage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const Spacer(),
                       Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
                             minimumSize: const Size.fromHeight(50),
