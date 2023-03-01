@@ -1,4 +1,4 @@
-import 'package:astronom/api/astro_api/lib/src/api.dart';
+import 'package:astro_api/astro_api.dart';
 import 'package:astronom/repository/astro_repository.dart';
 import 'package:astronom/ui/home/widgets/exoplanets_widget/bloc/exoplanets_bloc.dart';
 import 'package:astronom/ui/home/widgets/exoplanets_widget/bloc/exoplanets_event.dart';
@@ -12,6 +12,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('Astro')),
       backgroundColor: Colors.blueGrey,
       body: RepositoryProvider(
         create: (context) =>

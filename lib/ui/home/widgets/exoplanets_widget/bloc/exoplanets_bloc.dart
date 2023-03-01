@@ -10,15 +10,20 @@ class ExoplanetsBloc extends Bloc<ExoplanetsEvent, ExoplanetsState> {
     required this.repository,
   }) : super(ExoplanetsState()) {
     on<GetExoplanets>((event, emit) async {
-      try {
-        emit(state.copyWith(status: ExoplanetsStatus.loading));
-        final exoplanets = await repository.getExoplanets();
-        emit(
-          state.copyWith(
-              status: ExoplanetsStatus.success, exoplanets: exoplanets),
-        );
-      } catch (error) {
-        emit(state.copyWith(status: ExoplanetsStatus.error));
+      if (!state.status.isLoading && !state.isLastPage) {
+        try {
+          emit(state.copyWith(status: ExoplanetsStatus.loading));
+          final result = await repository.getExoplanets();
+          emit(
+            state.copyWith(
+              status: ExoplanetsStatus.success,
+              exoplanets: result.data,
+              isLastPage: result.isLastPage,
+            ),
+          );
+        } catch (error) {
+          emit(state.copyWith(status: ExoplanetsStatus.error));
+        }
       }
     });
   }

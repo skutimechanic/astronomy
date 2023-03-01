@@ -1,21 +1,29 @@
-import 'package:astronom/api/astro_api/lib/src/api/exoplanets_api.dart';
-import 'package:astronom/api/astro_api/lib/src/model/exoplanet.dart';
-import 'package:astronom/api/astro_api/lib/src/model/paginated_exoplanet_list.dart';
-import 'package:dio/dio.dart' show Response;
+import 'package:astro_api/astro_api.dart';
+import 'package:astronom/repository/models/result.dart';
 
 class ExoplanetsRepository {
+  static const int pageSize = 20;
   final ExoplanetsApi api;
 
   ExoplanetsRepository({required this.api});
 
-  Future<Set<Exoplanet>> getExoplanets() async {
-    final exoplanetWithPaginResponse = api.exoplanetsList();
-    final exoWithPagin =
-        (exoplanetWithPaginResponse as Response<PaginatedExoplanetList>).data;
-    if (exoWithPagin != null) {
-      final res = exoWithPagin.results?.toBuilder().build() as List<Exoplanet>;
-      return Set.of(res);
+  int _pageNumber = 0;
+  final Set<Exoplanet> _cachedExoplanets = {};
+
+  Future<Result<Set<Exoplanet>>> getExoplanets() async {
+    _pageNumber = _pageNumber == 0 ? 1 : _pageNumber;
+    bool isLastPage = false;
+    final response =
+        await api.exoplanetsList(page: _pageNumber, pageSize: pageSize);
+    final results = response.data?.results;
+    if (results != null) {
+      _cachedExoplanets.addAll(results);
+      if (response.data?.next != null) {
+        _pageNumber += 1;
+      } else {
+        isLastPage = true;
+      }
     }
-    return {};
+    return Result(isLastPage, _cachedExoplanets);
   }
 }
