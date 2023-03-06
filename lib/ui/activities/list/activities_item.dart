@@ -4,6 +4,7 @@ import 'package:astronom/ui/widgets/favorite_icon_button.dart';
 import 'package:astronom/utils/date_time_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:astronom/utils/constants.dart' as constants;
 
 import 'bloc/activities_bloc.dart';
 import 'bloc/activities_state.dart';
@@ -26,8 +27,9 @@ class ActivityItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final targetName = activity.targetName;
-    final String nameLabel =
-        (targetName != null && targetName.isNotEmpty) ? targetName : 'Empty';
+    final String nameLabel = (targetName != null && targetName.isNotEmpty)
+        ? targetName
+        : constants.emptyLabel;
     return BlocSelector<ActivitiesBloc, ActivitiesState, bool>(
       selector: (state) => state.activities[activity] ?? false,
       builder: (context, state) {
