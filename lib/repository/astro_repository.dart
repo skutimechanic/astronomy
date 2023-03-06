@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:astro_api/astro_api.dart';
 import 'package:astronom/repository/models/result.dart';
 import 'package:astronom/utils/string_extensions.dart';
+import 'package:astronom/utils/constants.dart' as constants;
 import 'package:tuple/tuple.dart';
 
 class AstroRepository {
@@ -70,8 +71,13 @@ class AstroRepository {
   }) async {
     final activities = Map<Activity, bool>.from(_cachedActivitesMap);
 
-    activities.removeWhere((key, value) =>
-        !key.targetName.orEmpty().toLowerCase().contains(phrase));
+    activities.removeWhere((key, _) {
+      if (phrase == constants.emptyLabel.toLowerCase()) {
+        return key.targetName.orEmpty().isNotEmpty;
+      }
+
+      return !key.targetName.orEmpty().toLowerCase().contains(phrase);
+    });
 
     return activities;
   }
