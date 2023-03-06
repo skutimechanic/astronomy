@@ -1,3 +1,3 @@
 extension StringX on String? {
-  orEmpty() => this ?? '';
+  String orEmpty() => this ?? '';
 }
